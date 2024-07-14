@@ -1,0 +1,46 @@
+[gd_scene load_steps=11 format=3 uid="uid://bgbgyyusi614o"]
+
+[ext_resource type="PackedScene" uid="uid://c57nctu4o0k0c" path="res://players/fps_player.tscn" id="1_6xjdj"]
+[ext_resource type="Texture2D" uid="uid://d4d7ggid86sy3" path="res://worlds/AllSkyFree_Sky_ColdSunset_Equirect.png" id="1_g4pm4"]
+[ext_resource type="Texture2D" uid="uid://bblv1pvxn1dh8" path="res://addons/kenney_prototype_textures/light/texture_07.png" id="2_xg3bv"]
+[ext_resource type="PackedScene" uid="uid://y32p3o8b1daf" path="res://things/rotating_platform.tscn" id="4_ri7ia"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_62qm5"]
+panorama = ExtResource("1_g4pm4")
+
+[sub_resource type="Sky" id="Sky_xg3qp"]
+sky_material = SubResource("PanoramaSkyMaterial_62qm5")
+
+[sub_resource type="Environment" id="Environment_kbfnr"]
+background_mode = 2
+sky = SubResource("Sky_xg3qp")
+ambient_light_source = 3
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_qmg2m"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_chcms"]
+size = Vector2(200, 200)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uxlny"]
+albedo_texture = ExtResource("2_xg3bv")
+uv1_triplanar = true
+
+[node name="TestWorld" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_kbfnr")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("WorldBoundaryShape3D_qmg2m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("PlaneMesh_chcms")
+surface_material_override/0 = SubResource("StandardMaterial3D_uxlny")
+
+[node name="Player" parent="." instance=ExtResource("1_6xjdj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="RotatingPlatform" parent="." instance=ExtResource("4_ri7ia")]
+rotation_speed = 2.0
