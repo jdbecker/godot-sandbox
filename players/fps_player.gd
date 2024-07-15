@@ -3,7 +3,6 @@ extends CharacterBody3D
 
 const TILT_LOWER_LIMIT := -PI/2
 const TILT_UPPER_LIMIT := PI/2
-const PAUSE_MENU := preload("res://user_interface/menus/pause_menu.tscn")
 
 @export var SPEED := 10.0
 @export_range(0.0, 1.0) var INERTIA := 0.2
@@ -39,12 +38,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("jump"):
 		velocity.y = JUMP_VELOCITY
 		get_viewport().set_input_as_handled()
-	
-	if event.is_action_pressed("exit"):
-		var pause_menu := PAUSE_MENU.instantiate() as PauseMenu
-		add_child(pause_menu)
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		pause_menu.resumed.connect(func () -> void: Input.mouse_mode = Input.MOUSE_MODE_CAPTURED)
 
 
 func _physics_process(delta: float) -> void:

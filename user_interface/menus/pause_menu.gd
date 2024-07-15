@@ -5,10 +5,27 @@ signal resumed
 
 const START_MENU := "res://user_interface/menus/start_menu.tscn"
 
+var _previous_mouse_mode: Input.MouseMode
+
+@onready var panel_container: PanelContainer = $PanelContainer as PanelContainer
+
+
+func _ready() -> void:
+	panel_container.hide()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("exit"):
+		panel_container.show()
+		_previous_mouse_mode = Input.mouse_mode
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		get_viewport().set_input_as_handled()
+
 
 func _on_resume_button_pressed() -> void:
 	resumed.emit()
-	queue_free()
+	Input.mouse_mode = _previous_mouse_mode
+	panel_container.hide()
 
 
 func _on_start_menu_button_pressed() -> void:

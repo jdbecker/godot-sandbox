@@ -1,6 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://b1veyd6m1kwqn"]
+[gd_scene load_steps=4 format=3 uid="uid://b1veyd6m1kwqn"]
 
 [ext_resource type="Script" path="res://user_interface/menus/pause_menu.gd" id="1_hs78b"]
+
+[sub_resource type="InputEventAction" id="InputEventAction_fxj05"]
+action = &"exit"
+pressed = true
+
+[sub_resource type="Shortcut" id="Shortcut_4v2b7"]
+events = [SubResource("InputEventAction_fxj05")]
 
 [node name="PauseMenu" type="Control"]
 layout_mode = 3
@@ -9,6 +16,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("1_hs78b")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
@@ -37,6 +45,8 @@ layout_mode = 2
 
 [node name="ResumeButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+shortcut = SubResource("Shortcut_4v2b7")
+shortcut_in_tooltip = false
 text = "Resume"
 
 [node name="SettingsButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
