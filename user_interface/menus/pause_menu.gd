@@ -3,7 +3,7 @@ extends Control
 
 signal resumed
 
-const START_MENU := "res://user_interface/menus/start_menu.tscn"
+@export var main_menu: PackedScene
 
 var _previous_mouse_mode: Input.MouseMode
 
@@ -29,7 +29,7 @@ func _on_resume_button_pressed() -> void:
 
 
 func _on_start_menu_button_pressed() -> void:
-	get_tree().change_scene_to_file(START_MENU)
+	get_tree().change_scene_to_packed(main_menu)
 
 
 func _on_quit_button_pressed() -> void:

@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://bgbgyyusi614o"]
+[gd_scene load_steps=13 format=3 uid="uid://bgbgyyusi614o"]
 
 [ext_resource type="PackedScene" uid="uid://c57nctu4o0k0c" path="res://players/fps_player.tscn" id="1_6xjdj"]
 [ext_resource type="Texture2D" uid="uid://d4d7ggid86sy3" path="res://worlds/AllSkyFree_Sky_ColdSunset_Equirect.png" id="1_g4pm4"]
 [ext_resource type="PackedScene" uid="uid://b1veyd6m1kwqn" path="res://user_interface/menus/pause_menu.tscn" id="2_x02li"]
 [ext_resource type="Texture2D" uid="uid://bblv1pvxn1dh8" path="res://addons/kenney_prototype_textures/light/texture_07.png" id="2_xg3bv"]
+[ext_resource type="PackedScene" uid="uid://dw5w4gtg2e4nt" path="res://user_interface/menus/start_menu.tscn" id="3_cjjjo"]
 [ext_resource type="PackedScene" uid="uid://y32p3o8b1daf" path="res://things/rotating_platform.tscn" id="4_ri7ia"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_62qm5"]
@@ -32,6 +33,7 @@ uv1_triplanar = true
 environment = SubResource("Environment_kbfnr")
 
 [node name="PauseMenu" parent="." instance=ExtResource("2_x02li")]
+main_menu = ExtResource("3_cjjjo")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 
