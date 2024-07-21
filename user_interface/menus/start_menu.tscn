@@ -11,6 +11,23 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_h6mkx")
 
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 272.0
+offset_bottom = 44.0
+
+[node name="UsernameLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "Username:"
+
+[node name="UsernameLineEdit" type="LineEdit" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Enter player name..."
+
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 offset_left = 498.0
@@ -43,5 +60,6 @@ text = "Settings"
 layout_mode = 2
 text = "Quit"
 
+[connection signal="text_changed" from="HBoxContainer/UsernameLineEdit" to="." method="_on_username_line_edit_text_changed"]
 [connection signal="pressed" from="VBoxContainer/SoloButton" to="." method="_on_solo_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

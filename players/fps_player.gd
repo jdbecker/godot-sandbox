@@ -17,13 +17,19 @@ var _tilt_input: float
 var _mouse_rotation: Vector3
 var _player_rotation: Vector3
 var _camera_rotation: Vector3
+var _data: Data = Global.data
 
 @onready var camera : Camera3D = $Camera3D as Camera3D
+@onready var label_3d: Label3D = $Label3D as Label3D
 
 
 func _ready() -> void:
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	camera.current = true
+	if is_multiplayer_authority():
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		camera.current = true
+		
+		label_3d.text = _data.username
+		label_3d.hide()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -65,7 +71,6 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 	
-
 
 
 func _update_camera(delta: float) -> void:
