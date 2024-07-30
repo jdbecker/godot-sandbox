@@ -43,12 +43,10 @@ text = "Solo"
 
 [node name="HostButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-disabled = true
 text = "Host"
 
 [node name="JoinButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-disabled = true
 text = "Join"
 
 [node name="SettingsButton" type="Button" parent="VBoxContainer"]
@@ -62,4 +60,6 @@ text = "Quit"
 
 [connection signal="text_changed" from="HBoxContainer/UsernameLineEdit" to="." method="_on_username_line_edit_text_changed"]
 [connection signal="pressed" from="VBoxContainer/SoloButton" to="." method="_on_solo_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

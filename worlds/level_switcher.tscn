@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bkkb6h2tnnshx"]
+
+[ext_resource type="Script" path="res://worlds/level_switcher.gd" id="1_wchlq"]
+
+[node name="LevelSwitcher" type="MultiplayerSpawner"]
+spawn_path = NodePath("Level")
+spawn_limit = 1
+script = ExtResource("1_wchlq")
+
+[node name="Level" type="Node" parent="."]

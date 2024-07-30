@@ -11,13 +11,14 @@ config_version=5
 [application]
 
 config/name="godot-sandbox"
-run/main_scene="res://Game.tscn"
+run/main_scene="res://game.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
 Global="*res://globals/global.gd"
+Lobby="*res://globals/lobby.gd"
 
 [debug]
 
@@ -46,6 +47,10 @@ gdscript/warnings/integer_division=2
 gdscript/warnings/narrowing_conversion=2
 gdscript/warnings/int_as_enum_without_cast=2
 gdscript/warnings/int_as_enum_without_match=2
+
+[display]
+
+window/stretch/mode="canvas_items"
 
 [dotnet]
 

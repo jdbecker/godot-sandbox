@@ -1,11 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://bgbgyyusi614o"]
+[gd_scene load_steps=12 format=3 uid="uid://bgbgyyusi614o"]
 
-[ext_resource type="PackedScene" uid="uid://c57nctu4o0k0c" path="res://players/fps_player.tscn" id="1_6xjdj"]
+[ext_resource type="Script" path="res://worlds/test_world.gd" id="1_a5e1u"]
 [ext_resource type="Texture2D" uid="uid://d4d7ggid86sy3" path="res://worlds/AllSkyFree_Sky_ColdSunset_Equirect.png" id="1_g4pm4"]
 [ext_resource type="PackedScene" uid="uid://b1veyd6m1kwqn" path="res://user_interface/menus/pause_menu.tscn" id="2_x02li"]
 [ext_resource type="Texture2D" uid="uid://bblv1pvxn1dh8" path="res://addons/kenney_prototype_textures/light/texture_07.png" id="2_xg3bv"]
-[ext_resource type="PackedScene" uid="uid://dw5w4gtg2e4nt" path="res://user_interface/menus/start_menu.tscn" id="3_cjjjo"]
-[ext_resource type="PackedScene" uid="uid://y32p3o8b1daf" path="res://things/rotating_platform.tscn" id="4_ri7ia"]
+[ext_resource type="PackedScene" uid="uid://csgknq7rwxhcj" path="res://things/ball.tscn" id="5_cirrn"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_62qm5"]
 panorama = ExtResource("1_g4pm4")
@@ -28,12 +27,16 @@ albedo_texture = ExtResource("2_xg3bv")
 uv1_triplanar = true
 
 [node name="TestWorld" type="Node3D"]
+script = ExtResource("1_a5e1u")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_kbfnr")
 
 [node name="PauseMenu" parent="." instance=ExtResource("2_x02li")]
-main_menu = ExtResource("3_cjjjo")
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://players/fps_player.tscn", "res://things/rotating_platform.tscn")
+spawn_path = NodePath("..")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 
@@ -44,8 +47,5 @@ shape = SubResource("WorldBoundaryShape3D_qmg2m")
 mesh = SubResource("PlaneMesh_chcms")
 surface_material_override/0 = SubResource("StandardMaterial3D_uxlny")
 
-[node name="Player" parent="." instance=ExtResource("1_6xjdj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-
-[node name="RotatingPlatform" parent="." instance=ExtResource("4_ri7ia")]
-rotation_speed = 2.0
+[node name="Ball" parent="." instance=ExtResource("5_cirrn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)

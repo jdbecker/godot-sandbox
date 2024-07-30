@@ -1,13 +1,13 @@
-class_name Player
+class_name FPSPlayer
 extends CharacterBody3D
 
 const TILT_LOWER_LIMIT := -PI/2
 const TILT_UPPER_LIMIT := PI/2
 
-@export var SPEED := 10.0
-@export_range(0.0, 1.0) var INERTIA := 0.2
-@export var JUMP_VELOCITY := 5.0
-@export var MOUSE_SENSITIVITY := 0.3
+@export var speed := 10.0
+@export_range(0.0, 1.0) var inertia := 0.2
+@export var jump_velocity := 5.0
+@export var mouse_sensitivity := 0.3
 
 var gravity := ProjectSettings.get_setting("physics/3d/default_gravity") as float
 
@@ -23,7 +23,12 @@ var _data: Data = Global.data
 @onready var label_3d: Label3D = $Label3D as Label3D
 
 
+func _enter_tree() -> void:
+	set_multiplayer_authority(str(name).to_int())
+
+
 func _ready() -> void:
+	print("%s spawned a player character for %s" % [multiplayer.get_unique_id(), name])
 	if is_multiplayer_authority():
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		camera.current = true
@@ -37,12 +42,12 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	if _mouse_input:
 		var mouse_motion := event as InputEventMouseMotion
-		_rotation_input = -mouse_motion.relative.x * MOUSE_SENSITIVITY
-		_tilt_input = -mouse_motion.relative.y * MOUSE_SENSITIVITY
+		_rotation_input = -mouse_motion.relative.x * mouse_sensitivity
+		_tilt_input = -mouse_motion.relative.y * mouse_sensitivity
 		get_viewport().set_input_as_handled()
 
-	if event.is_action_pressed("jump"):
-		velocity.y = JUMP_VELOCITY
+	if event.is_action_pressed("jump") and is_on_floor():
+		velocity.y = jump_velocity
 		get_viewport().set_input_as_handled()
 
 
@@ -56,21 +61,27 @@ func _physics_process(delta: float) -> void:
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 
 	if direction!= Vector3.ZERO:
-		velocity.x = lerp(velocity.x, direction.x * SPEED, INERTIA)
-		velocity.z = lerp(velocity.z, direction.z * SPEED, INERTIA)
+		velocity.x = lerp(velocity.x, direction.x * speed, inertia)
+		velocity.z = lerp(velocity.z, direction.z * speed, inertia)
 	else:
 		if abs(velocity.x) <= 0.1:
 			velocity.x = 0.0
 		else:
-			velocity.x = lerp(velocity.x, 0.0, INERTIA)
+			velocity.x = lerp(velocity.x, 0.0, inertia)
 
 		if abs(velocity.z) <= 0.1:
 			velocity.z = 0.0
 		else:
-			velocity.z = lerp(velocity.z, 0.0, INERTIA)
+			velocity.z = lerp(velocity.z, 0.0, inertia)
 	
 	move_and_slide()
 	
+	for index in get_slide_collision_count():
+		var collision := get_slide_collision(index)
+		if collision.get_collider() is RigidBody3D:
+			var rigidBody: RigidBody3D = collision.get_collider() as RigidBody3D
+			var push_force: float = float(1) + abs(velocity.length())
+			rigidBody.apply_central_impulse(-collision.get_normal() * push_force)
 
 
 func _update_camera(delta: float) -> void:

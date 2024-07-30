@@ -1,9 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://j1qr6bf1g2vf"]
+[gd_scene load_steps=4 format=3 uid="uid://j1qr6bf1g2vf"]
 
 [ext_resource type="PackedScene" uid="uid://dw5w4gtg2e4nt" path="res://user_interface/menus/start_menu.tscn" id="1_rebwe"]
-[ext_resource type="PackedScene" uid="uid://bgbgyyusi614o" path="res://worlds/test_world.tscn" id="2_nyjv7"]
+[ext_resource type="Script" path="res://game.gd" id="1_rquyn"]
+[ext_resource type="PackedScene" uid="uid://bkkb6h2tnnshx" path="res://worlds/level_switcher.tscn" id="1_ynmmn"]
 
 [node name="Game" type="Node"]
+script = ExtResource("1_rquyn")
+
+[node name="LevelSwitcher" parent="." instance=ExtResource("1_ynmmn")]
+_spawnable_scenes = PackedStringArray("res://worlds/test_world.tscn")
 
 [node name="StartMenu" parent="." instance=ExtResource("1_rebwe")]
-level_scene = ExtResource("2_nyjv7")
+level_scene = "res://worlds/test_world.tscn"
+
+[connection signal="hosted" from="StartMenu" to="." method="_on_start_menu_hosted"]

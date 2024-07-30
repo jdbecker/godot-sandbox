@@ -3,8 +3,7 @@ extends Control
 
 signal resumed
 
-@export var main_menu: PackedScene
-
+var _main_menu: String = ProjectSettings.get_setting("application/run/main_scene")
 var _previous_mouse_mode: Input.MouseMode
 
 @onready var panel_container: PanelContainer = $PanelContainer as PanelContainer
@@ -29,7 +28,8 @@ func _on_resume_button_pressed() -> void:
 
 
 func _on_start_menu_button_pressed() -> void:
-	get_tree().change_scene_to_packed(main_menu)
+	Lobby.end_connection()
+	get_tree().change_scene_to_file(_main_menu)
 
 
 func _on_quit_button_pressed() -> void:

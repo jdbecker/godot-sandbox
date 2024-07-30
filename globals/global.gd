@@ -1,6 +1,7 @@
 extends Node
 
 var data : Data : get = _get_data
+
 var _data : Data
 
 

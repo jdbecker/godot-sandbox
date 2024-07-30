@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://y32p3o8b1daf"]
+[gd_scene load_steps=7 format=3 uid="uid://y32p3o8b1daf"]
 
 [ext_resource type="Script" path="res://things/rotating_platform.gd" id="1_wuik0"]
 [ext_resource type="Texture2D" uid="uid://d1af5m3vi42al" path="res://addons/kenney_prototype_textures/green/texture_10.png" id="2_2pke4"]
@@ -13,6 +13,11 @@ size = Vector3(2, 1, 10)
 albedo_texture = ExtResource("2_2pke4")
 uv1_triplanar = true
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_jrvcc"]
+properties/0/path = NodePath(".:rotation")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+
 [node name="RotatingPlatform" type="AnimatableBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 script = ExtResource("1_wuik0")
@@ -26,3 +31,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
 mesh = SubResource("BoxMesh_ys0h4")
 skeleton = NodePath("../CollisionShape3D")
 surface_material_override/0 = SubResource("StandardMaterial3D_1xuv7")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_jrvcc")

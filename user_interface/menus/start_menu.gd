@@ -1,6 +1,8 @@
 extends Control
 
-@export var level_scene: PackedScene
+signal hosted(path: String)
+
+@export var level_scene: String
 
 @onready var username_line_edit: LineEdit = %UsernameLineEdit as LineEdit
 
@@ -12,7 +14,19 @@ func _ready() -> void:
 
 
 func _on_solo_button_pressed() -> void:
-	get_tree().change_scene_to_packed(level_scene)
+	queue_free.call_deferred()
+	hosted.emit(level_scene)
+
+
+func _on_host_button_pressed() -> void:
+	Lobby.host_game()
+	queue_free.call_deferred()
+	hosted.emit(level_scene)
+
+
+func _on_join_button_pressed() -> void:
+	Lobby.join_game("localhost")
+	queue_free.call_deferred()
 
 
 func _on_quit_button_pressed() -> void:
